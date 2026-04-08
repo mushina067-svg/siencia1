@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evidencia Científica — Wottrich</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #162436;
+  --navy3: #1e3450;
+  --green: #00c896;
+  --green2: #00a87e;
+  --green-dim: rgba(0,200,150,0.12);
+  --green-glow: rgba(0,200,150,0.25);
+  --text: #e8f0f7;
+  --text2: #8ba4bc;
+  --text3: #506070;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(0,200,150,0.2);
+  --card: rgba(255,255,255,0.04);
+  --card-hover: rgba(255,255,255,0.07);
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* BG pattern */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 80% 10%, rgba(0,200,150,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 10% 80%, rgba(0,100,180,0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HEADER */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,27,42,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 58px;
+}
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 600; font-size: 15px; letter-spacing: 0.02em;
+  color: var(--text);
+}
+.logo-mark {
+  width: 30px; height: 30px;
+  border: 1.5px solid var(--green);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; color: var(--green);
+  letter-spacing: 0;
+  font-family: 'DM Mono', monospace;
+}
+.logo span { color: var(--green); }
+.header-meta { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; }
+
+/* MAIN */
+main { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+/* HERO */
+.hero { margin-bottom: 2.5rem; }
+.hero h1 { font-size: 28px; font-weight: 600; line-height: 1.3; color: var(--text); margin-bottom: 8px; }
+.hero h1 span { color: var(--green); }
+.hero p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+/* SEARCH BOX */
+.search-wrap {
+  background: var(--card);
+  border: 0.5px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.search-row { display: flex; gap: 10px; margin-bottom: 1rem; }
+.search-input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 0 14px;
+  height: 44px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input::placeholder { color: var(--text3); }
+.search-input:focus { border-color: var(--green); }
+.btn-search {
+  height: 44px; padding: 0 22px;
+  background: var(--green);
+  border: none; border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn-search:hover { background: #00dca8; }
+.btn-search:active { transform: scale(0.98); }
+
+/* FILTERS */
+.filter-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+@media(max-width:600px){ .filter-grid { grid-template-columns: 1fr 1fr; } }
+.filter-group { display: flex; flex-direction: column; gap: 5px; }
+.filter-label { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; }
+.filter-select {
+  background: rgba(255,255,255,0.05);
+  border: 0.5px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 0 10px;
+  height: 36px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23506070' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+.filter-select:focus { border-color: var(--green); }
+.filter-select option { background: var(--navy2); color: var(--text); }
+
+/* CHIPS */
+.chips-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+.chip {
+  font-size: 12px; padding: 5px 12px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.chip:hover { border-color: var(--green); color: var(--green); }
+.chip.active { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+
+/* QUICK SEARCHES */
+.quick-label { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.quick-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.quick-btn {
+  font-size: 12px; padding: 5px 12px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.quick-btn:hover { background: var(--green-dim); border-color: var(--green2); color: var(--green); }
+
+/* RESULTS */
+#results-section { margin-top: 1.5rem; }
+.results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.results-count { font-size: 13px; color: var(--text2); font-family: 'DM Mono', monospace; }
+.results-list { display: flex; flex-direction: column; gap: 10px; }
+
+/* RESULT CARD */
+.rcard {
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.125rem 1.25rem;
+  transition: border-color 0.2s, background 0.2s;
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+}
+.rcard:hover { border-color: rgba(0,200,150,0.25); background: var(--card-hover); }
+@keyframes fadeIn { to { opacity: 1; } }
+.rcard-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+.rcard-title { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.4; }
+.rcard-badges { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+.badge {
+  font-size: 11px; padding: 2px 8px;
+  border-radius: 10px; white-space: nowrap;
+  font-family: 'DM Mono', monospace;
+}
+.b-pubmed  { background: rgba(0,150,255,0.12); color: #5ab8ff; border: 0.5px solid rgba(0,150,255,0.2); }
+.b-examine { background: rgba(0,200,150,0.1);  color: var(--green); border: 0.5px solid var(--border2); }
+.b-research{ background: rgba(255,180,0,0.1);  color: #ffcb5b; border: 0.5px solid rgba(255,180,0,0.2); }
+.b-meta    { background: rgba(160,100,255,0.1); color: #c4a0ff; border: 0.5px solid rgba(160,100,255,0.2); }
+.b-rct     { background: rgba(0,200,150,0.1);  color: var(--green); border: 0.5px solid var(--border2); }
+.b-position{ background: rgba(255,160,50,0.1); color: #ffb86c; border: 0.5px solid rgba(255,160,50,0.2); }
+.rcard-meta { font-size: 12px; color: var(--text3); margin-bottom: 8px; font-family: 'DM Mono', monospace; }
+.rcard-summary { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+.rcard-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.relevance-dots { display: flex; gap: 3px; align-items: center; }
+.rdot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
+.rdot.on { background: var(--green); }
+.rel-label { font-size: 11px; color: var(--text3); margin-left: 6px; font-family: 'DM Mono', monospace; }
+.link-btn {
+  font-size: 12px; padding: 5px 12px;
+  border-radius: 8px;
+  border: 0.5px solid rgba(0,200,150,0.3);
+  color: var(--green);
+  text-decoration: none;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.link-btn:hover { background: var(--green-dim); }
+
+/* STATES */
+.state-box {
+  text-align: center; padding: 3rem 1rem;
+  color: var(--text3); font-size: 14px;
+}
+.state-box .state-icon {
+  font-size: 32px; margin-bottom: 12px; display: block;
+  filter: grayscale(1) opacity(0.4);
+}
+.state-box p { color: var(--text2); margin-bottom: 6px; }
+.state-box small { color: var(--text3); font-size: 12px; }
+
+/* LOADING */
+.loading-row { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 2.5rem; color: var(--text2); font-size: 14px; }
+.spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.1); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ERROR */
+.error-box {
+  background: rgba(220,50,50,0.08);
+  border: 0.5px solid rgba(220,50,50,0.2);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px; color: #ff8080;
+  margin-bottom: 12px;
+}
+
+/* FOOTER */
+footer {
+  position: relative; z-index: 1;
+  border-top: 0.5px solid var(--border);
+  padding: 1.25rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+}
+footer p { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; }
+footer a { color: var(--green); text-decoration: none; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">W</div>
+    Wottrich <span>&nbsp;/ Evidencia Científica</span>
+  </div>
+  <div class="header-meta">PubMed · Examine · ResearchGate</div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Busca evidencia <span>científica</span><br>para el entrenamiento</h1>
+    <p>Natación sprint · Fuerza y potencia · Nutrición deportiva · Fisiología — resultados con resumen en español</p>
+  </div>
+
+  <!-- SEARCH BOX -->
+  <div class="search-wrap">
+    <div class="search-row">
+      <input class="search-input" id="queryInput" type="text"
+        placeholder="Ej: PAP swimming sprint, creatine adolescent, tapering performance...">
+      <button class="btn-search" id="searchBtn" onclick="doSearch()">Buscar</button>
+    </div>
+
+    <div class="filter-grid" style="margin-bottom:1rem;">
+      <div class="filter-group">
+        <div class="filter-label">Tipo de estudio</div>
+        <select class="filter-select" id="typeFilter">
+          <option value="all">Todos</option>
+          <option value="meta">Meta-análisis / revisión sistemática</option>
+          <option value="rct">RCT / ensayo controlado</option>
+          <option value="position">Position statement</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Fuente</div>
+        <select class="filter-select" id="sourceFilter">
+          <option value="all">Todas</option>
+          <option value="PubMed">PubMed</option>
+          <option value="Examine">Examine.com</option>
+          <option value="ResearchGate">ResearchGate</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Años</div>
+        <select class="filter-select" id="yearFilter">
+          <option value="all">Todos</option>
+          <option value="5">Últimos 5 años</option>
+          <option value="10" selected>Últimos 10 años</option>
+          <option value="15">Últimos 15 años</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-bottom:10px;">
+      <div class="filter-label" style="margin-bottom:7px;">Categoría</div>
+      <div class="chips-row" id="catChips">
+        <div class="chip active" data-cat="all">Todo</div>
+        <div class="chip" data-cat="swimming">Natación / sprint</div>
+        <div class="chip" data-cat="strength">Fuerza / potencia</div>
+        <div class="chip" data-cat="nutrition">Nutrición</div>
+        <div class="chip" data-cat="physiology">Fisiología</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="quick-label" style="margin-bottom:7px;">Búsquedas rápidas</div>
+      <div class="quick-btns">
+        <div class="quick-btn" onclick="qs('PAP post-activation potentiation swimming sprint')">PAP natación sprint</div>
+        <div class="quick-btn" onclick="qs('creatine monohydrate sprint performance adolescent')">Creatina juvenil</div>
+        <div class="quick-btn" onclick="qs('tapering swimming competition peak performance')">Tapering / pico forma</div>
+        <div class="quick-btn" onclick="qs('lactate threshold swimming training intensity zones')">Zonas de lactato</div>
+        <div class="quick-btn" onclick="qs('resistance training swimming performance youth')">Fuerza + natación</div>
+        <div class="quick-btn" onclick="qs('carbohydrate protein recovery swimming nutrition')">Nutrición recuperación</div>
+        <div class="quick-btn" onclick="qs('beta alanine buffering high intensity sprint')">Beta-alanina sprint</div>
+        <div class="quick-btn" onclick="qs('plyometric dry-land training swim velocity')">Pliometría + agua</div>
+        <div class="quick-btn" onclick="qs('caffeine swim sprint power performance')">Cafeína rendimiento</div>
+        <div class="quick-btn" onclick="qs('post-PHV athletic development swimming power adolescent')">Post-PHV natación</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results-section">
+    <div class="state-box" id="emptyState">
+      <span class="state-icon">🔬</span>
+      <p>Ingresa un término y presiona Buscar</p>
+      <small>Los resultados se muestran con resumen en español y link directo al paper</small>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Wottrich · Herramientas de entrenamiento 2026</p>
+  <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank">PubMed My NCBI →</a>
+</footer>
+
+<script>
+let activeCategory = 'all';
+
+document.querySelectorAll('#catChips .chip').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('#catChips .chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    activeCategory = c.dataset.cat;
+  });
+});
+
+document.getElementById('queryInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+function qs(q) {
+  document.getElementById('queryInput').value = q;
+  doSearch();
+}
+
+function studyTypeLabel(t) {
+  if (t === 'meta') return 'Meta-análisis';
+  if (t === 'rct') return 'RCT';
+  if (t === 'position') return 'Position stmt';
+  return '';
+}
+function studyTypeBadge(t) {
+  if (t === 'meta') return 'b-meta';
+  if (t === 'rct') return 'b-rct';
+  if (t === 'position') return 'b-position';
+  return '';
+}
+function sourceBadge(s) {
+  if (s === 'PubMed') return 'b-pubmed';
+  if (s === 'Examine') return 'b-examine';
+  return 'b-research';
+}
+
+async function doSearch() {
+  const rawQuery = document.getElementById('queryInput').value.trim();
+  if (!rawQuery) return;
+
+  const typeFilter = document.getElementById('typeFilter').value;
+  const sourceFilter = document.getElementById('sourceFilter').value;
+  const yearFilter = document.getElementById('yearFilter').value;
+  const yearFrom = yearFilter === 'all' ? 1990 : (new Date().getFullYear() - parseInt(yearFilter));
+
+  const sec = document.getElementById('results-section');
+  sec.innerHTML = `<div class="loading-row"><div class="spinner"></div>Buscando evidencia científica...</div>`;
+
+  const catCtx = activeCategory === 'all' ? '' : `Category focus: ${activeCategory}.`;
+  const typeCtx = typeFilter === 'all'
+    ? 'Include meta-analyses, systematic reviews, RCTs, and position statements.'
+    : typeFilter === 'meta' ? 'ONLY return meta-analyses and systematic reviews.'
+    : typeFilter === 'rct' ? 'ONLY return RCTs and controlled trials.'
+    : 'ONLY return position statements from ISSN, ACSM, World Aquatics, IOC.';
+
+  const prompt = `You are a sports science research assistant. Find peer-reviewed evidence on: "${rawQuery}". ${catCtx} ${typeCtx} Year from: ${yearFrom}.
+
+Search PubMed, Examine.com, ResearchGate. Return ONLY a valid JSON array (no markdown, no backticks, no preamble) with 4–6 results. Schema:
+{"title":"...","authors":"Last et al.","year":2022,"journal":"...","source":"PubMed"|"Examine"|"ResearchGate","study_type":"meta"|"rct"|"position","pmid":"12345678" or null,"doi":"10.xxx/..." or null,"summary_es":"2-3 oraciones en español con hallazgos e implicación práctica para atletas sprint/natación.","relevance":1-5,"url":"direct link"}
+CRITICAL: Only real verifiable papers. If unsure a paper exists, omit it. Return JSON array only.`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await resp.json();
+    const fullText = (data.content || []).map(i => i.text || '').filter(Boolean).join('\n');
+    const clean = fullText.replace(/```json|```/g, '').trim();
+    const s = clean.indexOf('['), e = clean.lastIndexOf(']');
+    if (s === -1) throw new Error('Sin resultados');
+    let results = JSON.parse(clean.slice(s, e + 1));
+
+    if (sourceFilter !== 'all') results = results.filter(r => r.source === sourceFilter);
+    results.sort((a, b) => (b.relevance || 0) - (a.relevance || 0));
+
+    if (!results.length) {
+      sec.innerHTML = `<div class="state-box"><span class="state-icon">🔍</span><p>Sin resultados para estos filtros</p><small>Intenta ampliar el rango de años o cambiar el tipo de estudio</small></div>`;
+      return;
+    }
+
+    let html = `<div class="results-header"><div class="results-count">${results.length} resultado${results.length !== 1 ? 's' : ''} — ordenados por relevancia</div></div><div class="results-list">`;
+
+    results.forEach((r, i) => {
+      const dots = [1,2,3,4,5].map(d => `<div class="rdot ${d <= (r.relevance||0) ? 'on' : ''}"></div>`).join('');
+      const linkUrl = r.url || (r.pmid ? `https://pubmed.ncbi.nlm.nih.gov/${r.pmid}/` : r.doi ? `https://doi.org/${r.doi}` : '#');
+      const linkLabel = r.pmid ? `PubMed ${r.pmid}` : r.doi ? 'Ver paper' : 'Ver fuente';
+      const typeBadge = r.study_type ? `<span class="badge ${studyTypeBadge(r.study_type)}">${studyTypeLabel(r.study_type)}</span>` : '';
+      html += `
+        <div class="rcard" style="animation-delay:${i * 0.06}s">
+          <div class="rcard-top">
+            <div class="rcard-title">${r.title}</div>
+            <div class="rcard-badges">${typeBadge}<span class="badge ${sourceBadge(r.source)}">${r.source}</span></div>
+          </div>
+          <div class="rcard-meta">${r.authors || ''} · ${r.year || ''} · ${r.journal || ''}</div>
+          <div class="rcard-summary">${r.summary_es || ''}</div>
+          <div class="rcard-footer">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div class="relevance-dots">${dots}</div>
+              <span class="rel-label">relevancia</span>
+            </div>
+            <a class="link-btn" href="${linkUrl}" target="_blank">${linkLabel} →</a>
+          </div>
+        </div>`;
+    });
+
+    html += '</div>';
+    sec.innerHTML = html;
+
+  } catch (err) {
+    sec.innerHTML = `<div class="error-box">Error al buscar. Intenta de nuevo o usa términos en inglés para mejores resultados en PubMed.<br><small>${err.message}</small></div>`;
+  }
+}
+</script>
+</body>
+</html>
